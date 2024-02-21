@@ -1,3 +1,3 @@
-# This folder hosts code for data acquisition and understanding (exploratory analysis)
+# Ce dossier Contient la partie Acquision de nos données de puis l'API de Atmo Data
 
-You can add detailed description in this markdown related to your specific data science project.
+Y
