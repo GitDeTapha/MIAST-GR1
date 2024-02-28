@@ -7,7 +7,9 @@ Ce projet vise à récupérer des données sur la qualité de l'air et la pollut
 Avant d'exécuter le programme, assurez-vous d'avoir :
 
 - Généré un token sur le site d'AtmoData et l'avoir enregistré dans un fichier nommé `token.json`.
-- Téléchargé le fichier `commune_insee.xlsx` depuis le site de l'INSEE, qui contient les codes géographiques officiels de la France depuis 2022.
+- placé le fichier `commune_insee.xlsx`disponible depuis Sample_Data, ce fichier a été téléchargé depuis le site de l'INSEE, qui contient les codes géographiques officiels de la France depuis 2022
+Nous avons pris le soin de traiter le fichier pour ne garder que les informations qui nous interesse notammment le type de commune ("TYPECOM"), le Code de la commune ("COM"), le code département ("DEP"), le code région ("REG"). Nous avons égalements supprimé certains type de communes comme les COMA et COMD qui ne nous interressé pas et appliqué des mise en forme pour faciliter son usage. Afin de pouvoir s'assurer que notre programme parcourera chaque commune une et une fois pour chaque types de données (id_data), nous avons crées une colonne supplémentaire pour chaque type de données contenant des valeurs binaires. 
+- [ ] crée un fichier nommé "empty_trace_com.csv", qui, par précaution stock quelques infos sur les communes (ou régions si l'id_data =119) parcourues et qui n'ont pas donné de resultats.
 
 ## Fonctionnement
 
