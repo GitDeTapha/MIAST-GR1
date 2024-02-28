@@ -1,6 +1,6 @@
 # Acquisition de données depuis AtmoData API
 
-Ce projet vise à récupérer des données sur la qualité de l'air et la pollution depuis l'API AtmoData et à les stocker dans une base de données MongoDB. Les données sont acquises pour différentes régions, départements et communes en France.
+Ce code vise à récupérer progressivement des données sur la qualité de l'air et la pollution depuis l'API AtmoData et à les stocker dans une base de données MongoDB. Les données sont acquises pour différentes régions, départements et communes en France. Elles serviront pour l'entrainement de notre modèle de prédiction.
 
 ## Prérequis
 
