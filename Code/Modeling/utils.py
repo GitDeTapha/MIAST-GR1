@@ -313,7 +313,85 @@ def plot_learning_curve(estimator, X, y):
     plt.show()
 
 
+import pandas as pd
 
+def resample_by_day(df, window_size=1):
+    """
+    Cette fonction rééchantillonne un DataFrame sur une base journalière (ou une fenêtre spécifiée en jours)
+    et arrondit les moyennes pour retourner des valeurs entières. Ce processus est particulièrement pensé pour
+    des données ordinales mappées où les valeurs moyennes flottantes sont converties en entiers pour maintenir
+    la cohérence avec le mappage original.
+    
+    Paramètres:
+    - df : DataFrame pandas contenant au moins les colonnes 'date_ech' et les colonnes à moyenne.
+    - window_size : Taille de la fenêtre pour l'échantillonnage en jours. Par défaut, elle est fixée à 1 jour.
+    
+    Retourne:
+    - Un DataFrame avec les valeurs moyennes calculées sur chaque fenêtre, arrondies à l'entier le plus proche,
+      et limitées à la période allant du début du DataFrame jusqu'à sa dernière date.
+    """
+    # Convertir 'date_ech' en datetime si nécessaire
+    df['date_ech'] = pd.to_datetime(df['date_ech'])
+    last_date = df['date_ech'].iloc[-1]  # Dernière date disponible dans les données
+    
+    # Définition de la fréquence d'échantillonnage
+    freq = f'{window_size}D'
+    
+    # Échantillonnage et calcul de la moyenne des valeurs, suivi d'un arrondi pour obtenir des entiers
+    df_resampled = df.resample(freq, on='date_ech').mean()  # Moyenne calculée ici
+    df_resampled = df_resampled.round()  # Arrondissement aux entiers les plus proches
+    
+    # Filtrer les données pour ne pas dépasser la dernière date
+    df_resampled = df_resampled[df_resampled.index <= last_date]
+    
+    return df_resampled
+
+
+
+# fonction pour interpoler les valeurs manquantes, on pourrais aussi avoir d'autre méthodes(foward_fill, backward_fill...)
+def interpolate(y):
+    y0 = y.copy()
+    N = len(y0)
+    pos = 0
+    while pos < N:
+        if np.isnan(y0[pos]):
+            count = 0
+            while np.isnan(y0[pos + count]):
+                count += 1
+            current = y0[pos - 1]
+            future = y0[pos + count]
+            slope = (future - current) / count
+            y0[pos:pos + count] = current + np.arange(1, count + 1) * slope
+            pos += count
+        else:
+            pos += 1
+    return y0
+
+def evaluate_predictions(test_set, predictions_df):
+    """
+    Évalue les prédictions d'un modèle par rapport à un ensemble de test.
+
+    Parameters:
+    - test_set (DataFrame): Un DataFrame contenant les valeurs réelles.
+    - predictions_df (DataFrame): Un DataFrame contenant les prédictions du modèle.
+    
+    Les deux DataFrames doivent avoir une colonne 'code_qual' pour test_set et 'Prediction' pour predictions_df.
+    """
+    # Extraire les valeurs réelles de la qualité de l'air
+    y_true = test_set['code_qual'].values
+
+    # Convertir les prédictions en un numpy array pour le calcul des métriques
+    y_pred = predictions_df['Prediction'].values
+
+    # Calculer les métriques d'évaluation
+    mae = mean_absolute_error(y_true, y_pred)
+    mse = mean_squared_error(y_true, y_pred)
+    r2 = r2_score(y_true, y_pred)
+
+    # Afficher les métriques d'évaluation
+    print(f"Mean Absolute Error (MAE): {mae}")
+    print(f"Mean Squared Error (MSE): {mse}")
+    print(f"R^2 Score: {r2}")
 
 
 ############################################################
