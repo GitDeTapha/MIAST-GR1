@@ -26,10 +26,6 @@ De plus, une fonction de mise à jour permet d'obtenir les nouvelles information
 
 La mise à jour a pour but de requérir de nouvelles informations qui sont postérieures à la date la plus récente disponible dans les fichiers CSV ou dans la base de données.
 
-## Acquisition de données
-
-Pour une description détaillée de la procédure d'acquisition des données et de génération du token d'accès, veuillez consulter la section dédiée de ce README.
-
 ---
 
 Cette section vise à fournir une vue d'ensemble claire et concise des composantes de la modélisation dans notre projet d'exploration de la qualité et de la pollution de l'air en France. Pour toute question ou clarification, n'hésitez pas à ouvrir un issue sur GitHub.
